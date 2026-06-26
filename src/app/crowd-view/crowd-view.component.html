@@ -1,0 +1,129 @@
+<div class="crowd-view-container">
+  <div class="header">
+    <h1>
+      <mat-icon class="header-icon">search_music</mat-icon>
+      Song Suche
+    </h1>
+    <p class="subtitle">Suche nach Songs um sie zur Warteschlange hinzuzufügen</p>
+  </div>
+
+  <div class="main-layout">
+
+    <!-- ===== Queue Panel (links) ===== -->
+    <aside class="queue-panel">
+      <h2 class="queue-title">
+        <mat-icon class="queue-icon">queue_music</mat-icon>
+        Warteschlange
+      </h2>
+
+      @if (queue().length === 0) {
+        <div class="queue-empty">
+          <mat-icon>music_off</mat-icon>
+          <p>Noch keine Songs</p>
+        </div>
+      } @else {
+        <div class="queue-list">
+          @for (song of queue(); let i = $index; track i) {
+            <div class="queue-item">
+              <img [src]="song.imageUrl" [alt]="song.name" class="queue-img">
+              <div class="queue-info">
+                <span class="queue-song-name">{{ song.name }}</span>
+                <span class="queue-artist">{{ song.artist }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </aside>
+
+    <!-- ===== Search Section (rechts) ===== -->
+    <div class="search-area">
+      <div class="search-section">
+        <mat-form-field class="search-field" appearance="outline">
+          <mat-label>Song Name</mat-label>
+          <input
+            matInput
+            [(ngModel)]="searchQuery"
+            (keydown.enter)="search()"
+            placeholder="Gib einen Songnamen ein..."
+            [disabled]="isLoading()">
+          <mat-icon matPrefix>music_note</mat-icon>
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="search()"
+          [disabled]="isLoading()"
+          class="search-button">
+          @if (!isLoading()) {
+            <mat-icon>search</mat-icon>
+          } @else {
+            <mat-icon class="spinner-icon">hourglass_empty</mat-icon>
+          }
+          {{ isLoading() ? 'Suche läuft...' : 'Suchen' }}
+        </button>
+      </div>
+
+      <div class="results-section">
+        @if (isLoading()) {
+          <div class="loading-state">
+            <mat-spinner diameter="50"></mat-spinner>
+            <p>Suche läuft...</p>
+          </div>
+        } @else if (errorMessage()) {
+          <div class="error-state">
+            <mat-icon class="error-icon">error_outline</mat-icon>
+            <h3>Ein Fehler ist aufgetreten</h3>
+            <p>{{ errorMessage() }}</p>
+          </div>
+        } @else if (hasSearched() && searchResults().length === 0) {
+          <div class="empty-state">
+            <mat-icon class="empty-icon">music_off</mat-icon>
+            <h3>Keine Ergebnisse gefunden</h3>
+            <p>Keine Songs gefunden für "{{ searchQuery() }}"</p>
+          </div>
+        } @else if (searchResults().length > 0) {
+          <div class="results-info">
+            <p>{{ searchResults().length }} Song(s) gefunden</p>
+          </div>
+          <div class="results-list">
+            @for (song of searchResults(); let i = $index; track i) {
+              <mat-card class="result-item" appearance="outlined">
+                <article class="result-item-content">
+                  <img
+                    [src]="song.imageUrl"
+                    [alt]="song.name"
+                    class="song-image">
+
+                  <div class="song-info">
+                    <h3>{{ song.name }}</h3>
+                    <p class="artist">
+                      <mat-icon class="inline-icon">person</mat-icon>
+                      <span>{{ song.artist }}</span>
+                    </p>
+                    <p class="album">
+                      <mat-icon class="inline-icon">album</mat-icon>
+                      <span>{{ song.album }}</span>
+                    </p>
+                  </div>
+
+                  <button
+                    mat-raised-button
+                    color="accent"
+                    class="add-btn"
+                    (click)="addSong(song)"
+                    [attr.aria-label]="'Song ' + song.name + ' hinzufügen'">
+                    <mat-icon>add_circle</mat-icon>
+                    Hinzufügen
+                  </button>
+                </article>
+              </mat-card>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+  </div>
+</div>

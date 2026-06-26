@@ -1,0 +1,67 @@
+<div class="dj-view-container">
+  <div class="header">
+    <div class="header-glow"></div>
+    <div class="header-content">
+      <mat-icon class="header-icon">queue_music</mat-icon>
+      <div>
+        <h1>Warteschlange</h1>
+        <p class="subtitle">
+          <span class="dot"></span>
+          {{songQueue().length}} Songs in der Warteschlange
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="queue-section">
+    @if (songQueue().length > 0) {
+      <div class="queue-list">
+        @for (song of songQueue(); let i = $index; track i) {
+          <mat-card
+            class="queue-item"
+            appearance="outlined">
+            <article class="queue-item-content">
+              <div class="queue-number" aria-label="Position {{ i + 1 }}">
+                {{ i + 1 }}
+              </div>
+
+              <div class="song-image-wrapper">
+                <img
+                  [src]="song.imageUrl"
+                  [alt]="song.name"
+                  class="song-image">
+              </div>
+
+              <div class="song-info">
+                <h3>{{ song.name }}</h3>
+                <p class="artist">
+                  <mat-icon class="inline-icon">person</mat-icon>
+                  <span>{{ song.artist }}</span>
+                </p>
+                <p class="album">
+                  <mat-icon class="inline-icon">album</mat-icon>
+                  <span>{{ song.album }}</span>
+                </p>
+              </div>
+
+              <button
+                mat-icon-button
+                (click)="removeSongFromQueue(song)"
+                class="delete-btn"
+                [attr.aria-label]="'Song ' + song.name + ' entfernen'">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </article>
+          </mat-card>
+        }
+      </div>
+    } @else {
+      <div class="empty-state">
+        <div class="empty-glow"></div>
+        <mat-icon class="empty-icon">music_off</mat-icon>
+        <h3>Keine Songs in der Warteschlange</h3>
+        <p>Die Warteschlange ist leer</p>
+      </div>
+    }
+  </div>
+</div>
