@@ -1,29 +1,33 @@
 <mat-toolbar class="app-toolbar">
-  <button mat-icon-button (click)="toggleSidebar()" class="toggle-button">
-    <mat-icon>menu</mat-icon>
-  </button>
+  @if (!isCrowdView()) {
+    <button mat-icon-button (click)="toggleSidebar()" class="toggle-button">
+      <mat-icon>menu</mat-icon>
+    </button>
+  }
   <span class="toolbar-title">CrowdCue</span>
 </mat-toolbar>
 
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-    #sidenav
-    [opened]="sidebarOpen()"
-    mode="side"
-    class="sidebar"
-  >
-    <mat-nav-list class="nav-list">
-      <mat-list-item>
-        <mat-icon matListItemIcon>radio</mat-icon>
-        <a matListItemTitle routerLink="/dj-view">DJ Ansicht</a>
-      </mat-list-item>
+  @if (!isCrowdView()) {
+    <mat-sidenav
+      #sidenav
+      [opened]="sidebarOpen()"
+      mode="side"
+      class="sidebar"
+    >
+      <mat-nav-list class="nav-list">
+        <mat-list-item>
+          <mat-icon matListItemIcon>radio</mat-icon>
+          <a matListItemTitle routerLink="/dj-view">DJ Ansicht</a>
+        </mat-list-item>
 
-      <mat-list-item>
-        <mat-icon matListItemIcon>group</mat-icon>
-        <a matListItemTitle routerLink="/crowd-view">Crowd Ansicht</a>
-      </mat-list-item>
-    </mat-nav-list>
-  </mat-sidenav>
+        <mat-list-item>
+          <mat-icon matListItemIcon>group</mat-icon>
+          <a matListItemTitle routerLink="/crowd-view">Crowd Ansicht</a>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+  }
 
   <mat-sidenav-content class="content">
     <ng-content></ng-content>
