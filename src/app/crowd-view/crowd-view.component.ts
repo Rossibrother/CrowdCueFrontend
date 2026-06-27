@@ -63,16 +63,9 @@ export class CrowdViewComponent {
   }
 
   addSong(song: Song) {
-    this.songService.addSong(song).subscribe({
-      next: () => {
-        this.searchQuery.set('');
-        this.searchResults.set([]);
-        this.hasSearched.set(false);
-      },
-      error: (error) => {
-        console.error('Error adding song:', error);
-        this.errorMessage.set('Fehler beim Hinzufügen. Bitte versuche es später erneut.');
-      }
-    });
+    this.songQueueService.addSong(song);
+    this.searchQuery.set('');
+    this.searchResults.set([]);
+    this.hasSearched.set(false);
   }
 }
