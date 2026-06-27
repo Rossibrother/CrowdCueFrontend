@@ -1,0 +1,29 @@
+<div class="qr-container">
+  <div class="header">
+    <div class="header-glow"></div>
+    <div class="header-content">
+      <mat-icon class="header-icon">qr_code_2</mat-icon>
+      <div>
+        <h1>QR-Code</h1>
+        <p class="subtitle">
+          <span class="dot"></span>
+          Crowd View beitreten
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qr-card">
+    <div class="qr-glow"></div>
+    <p class="qr-label">Scanne den Code, um zur Crowd View zu gelangen</p>
+    <div class="canvas-wrapper">
+      <canvas #qrCanvas></canvas>
+    </div>
+    <div class="url-row">
+      <span class="url-text">{{ crowdViewUrl() }}</span>
+      <button mat-icon-button (click)="copyUrl()" class="copy-btn" aria-label="URL kopieren">
+        <mat-icon>content_copy</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

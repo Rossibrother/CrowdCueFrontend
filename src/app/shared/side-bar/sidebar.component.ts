@@ -56,7 +56,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   private extractQueueId(url: string): string | null {
-    const match = url.match(/\/(dj-view|crowd-view)\/([^?#]+)/);
+    const match = url.match(/\/(dj-view|crowd-view|qr-code)\/([^?#]+)/);
     return match ? match[2] : null;
   }
 }
