@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Client, IMessage } from '@stomp/stompjs';
 import { Song } from '../model/song';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class WebSocketService implements OnDestroy {
 
   constructor() {
     this.client = new Client({
-      brokerURL: 'ws://localhost:8080/ws',
+      brokerURL: environment.wsUrl,
       reconnectDelay: 5000,
       onConnect: () => {
         this.client.subscribe('/topic/songs', (message: IMessage) => {

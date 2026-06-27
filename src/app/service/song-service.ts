@@ -2,6 +2,7 @@ import {inject} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Song} from '../model/song';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +12,15 @@ export class SongService {
 
 
   searchSongByName(songName: string) {
-    return this.httpClient.get<Song[]>(`http://localhost:8080/songs/search/${encodeURIComponent(songName)}`);
+    return this.httpClient.get<Song[]>(`${environment.apiUrl}/songs/search/${encodeURIComponent(songName)}`);
   }
 
   addSong(song: Song) {
-    return this.httpClient.post<Song>('http://localhost:8080/songs/add', song);
+    return this.httpClient.post<Song>(`${environment.apiUrl}/songs/add`, song);
   }
 
   removeSong(song: Song) {
-    return this.httpClient.delete<Song>('http://localhost:8080/songs/remove', { body: song });
+    return this.httpClient.delete<Song>(`${environment.apiUrl}/songs/remove`, { body: song });
   }
 
 }
