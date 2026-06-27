@@ -10,17 +10,8 @@ import { environment } from '../../environments/environment';
 export class SongService {
   private httpClient = inject(HttpClient);
 
-
   searchSongByName(songName: string) {
     return this.httpClient.get<Song[]>(`${environment.apiUrl}/songs/search/${encodeURIComponent(songName)}`);
-  }
-
-  addSong(song: Song) {
-    return this.httpClient.post<Song>(`${environment.apiUrl}/songs/add`, song);
-  }
-
-  removeSong(song: Song) {
-    return this.httpClient.delete<Song>(`${environment.apiUrl}/songs/remove`, { body: song });
   }
 
 }

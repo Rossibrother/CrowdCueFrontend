@@ -3,7 +3,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Song } from '../model/song';
-import { SongService } from '../service/song-service';
 import { SongQueueService } from '../service/song-queue.service';
 
 @Component({
@@ -14,12 +13,11 @@ import { SongQueueService } from '../service/song-queue.service';
   styleUrl: './dj-view.component.css'
 })
 export class DJViewComponent {
-  private songService = inject(SongService);
   private songQueueService = inject(SongQueueService);
 
   readonly songQueue = this.songQueueService.queue;
 
   removeSongFromQueue(song: Song) {
-    this.songService.removeSong(song).subscribe();
+    this.songQueueService.removeSong(song);
   }
 }
