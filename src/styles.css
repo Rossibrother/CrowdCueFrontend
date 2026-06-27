@@ -9,14 +9,13 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
-  color: #e0e0f0;
-  background-color: #0a0a1a;
+  font-family: 'Inter', 'Roboto', sans-serif;
+  color: #e8e8e8;
+  background-color: #111111;
 }
 
 body {
-  background: linear-gradient(160deg, #0a0a1a 0%, #1a0a2e 50%, #0a1a2e 100%);
-  background-attachment: fixed;
+  background-color: #111111;
 }
 
 /* Custom scrollbar */
@@ -25,14 +24,14 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.03);
+  background: #1a1a1a;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(124, 58, 237, 0.4);
+  background: #333;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(124, 58, 237, 0.7);
+  background: #444;
 }
 
 /* Material 3 Theme */

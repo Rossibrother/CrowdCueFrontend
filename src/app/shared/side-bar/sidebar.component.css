@@ -1,30 +1,30 @@
 .app-toolbar {
-  background: rgba(10, 10, 26, 0.85) !important;
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(124, 58, 237, 0.25);
-  color: #e0e0f0;
+  background: #111111 !important;
+  border-bottom: 1px solid #252525;
+  color: #e8e8e8;
   display: flex;
   align-items: center;
   padding: 0 16px;
   position: sticky;
   top: 0;
   z-index: 10;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 0 #252525;
 }
 
 .toolbar-title {
-  font-size: 1.3rem;
-  font-weight: 700;
+  font-size: 1.15rem;
+  font-weight: 600;
   margin-left: 16px;
-  background: linear-gradient(90deg, #c4b5fd, #67e8f9);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: 0.5px;
+  color: #e8e8e8;
+  letter-spacing: 0;
 }
 
 .toggle-button {
-  color: #c4b5fd !important;
+  color: #888 !important;
+}
+
+.toggle-button:hover {
+  color: #e8e8e8 !important;
 }
 
 .sidenav-container {
@@ -35,35 +35,35 @@
 
 .sidebar {
   width: 250px;
-  background: rgba(15, 10, 30, 0.95) !important;
-  border-right: 1px solid rgba(124, 58, 237, 0.2) !important;
+  background: #111111 !important;
+  border-right: 1px solid #252525 !important;
   box-shadow: none !important;
 }
 
 .nav-list {
-  padding: 16px 8px;
+  padding: 12px 8px;
 }
 
 /* Nav items */
 .sidebar mat-list-item {
-  border-radius: 10px !important;
-  margin-bottom: 4px !important;
-  color: #8b8baa !important;
-  transition: all 0.2s ease;
+  border-radius: 8px !important;
+  margin-bottom: 2px !important;
+  color: #888 !important;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .sidebar mat-list-item:hover {
-  background: rgba(124, 58, 237, 0.12) !important;
-  color: #c4b5fd !important;
+  background: #1e1e1e !important;
+  color: #e8e8e8 !important;
 }
 
 .sidebar mat-list-item mat-icon {
-  color: #6b6b8e !important;
-  transition: color 0.2s ease;
+  color: #555 !important;
+  transition: color 0.15s ease;
 }
 
 .sidebar mat-list-item:hover mat-icon {
-  color: #7c3aed !important;
+  color: #6366f1 !important;
 }
 
 .content {
@@ -79,12 +79,12 @@ a {
 }
 
 a:hover {
-  color: #c4b5fd;
+  color: #e8e8e8;
   text-decoration: none;
 }
 
 .nav-item-disabled {
-  opacity: 0.45;
+  opacity: 0.35;
   pointer-events: none;
 }
 
