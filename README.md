@@ -1,59 +1,73 @@
-# CrowdCueFrontend
+# CrowdCue – Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.4.
+CrowdCue ist eine Echtzeit-Song-Request-App für DJs und ihr Publikum. Der DJ erstellt eine Queue, teilt einen QR-Code mit dem Publikum und das Publikum kann darüber Songs suchen und zur Playlist hinzufügen – alles live und ohne Registrierung.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **DJ-View** – Erstelle eine neue Queue und verwalte die aktuelle Songliste. Songs können jederzeit entfernt werden.
+- **Crowd-View** – Das Publikum öffnet die Seite per QR-Code oder Link, sucht nach Songs und fügt sie der Queue hinzu.
+- **QR-Code-Generator** – Automatisch generierter QR-Code, der direkt zur Crowd-View der aktuellen Queue führt. Der Link kann auch in die Zwischenablage kopiert werden.
+- **Echtzeit-Updates** – Queue-Änderungen (Songs hinzufügen/entfernen) werden per WebSocket (STOMP) sofort an alle verbundenen Clients übertragen.
 
-```bash
-ng serve
-```
+## Tech Stack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Framework:** [Angular 22](https://angular.dev/) mit [Angular Material](https://material.angular.io/)
+- **Echtzeit:** WebSockets via [@stomp/stompjs](https://stomp-js.github.io/stomp-websocket/)
+- **QR-Code:** [qrcode](https://www.npmjs.com/package/qrcode)
+- **Tests:** [Vitest](https://vitest.dev/)
 
-## Code scaffolding
+## Hosting
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Die App ist als Docker-Image gebaut und wird auf [Railway](https://railway.app) gehostet:
 
-```bash
-ng generate component component-name
-```
+- **Produktions-URL:** `https://crowdcue.xyz`
+- **Build:** Multi-Stage Dockerfile – Stage 1 baut die Angular-App mit Node.js, Stage 2 liefert die statischen Dateien über **nginx:alpine** aus.
+- **Port:** 8080 (wird von Railway dynamisch über die `$PORT`-Umgebungsvariable gesetzt)
+- **Sicherheit:** nginx ist mit Security-Headern konfiguriert (HSTS, CSP, X-Frame-Options, etc.)
+- **Restart-Policy:** Bei Fehler wird der Container automatisch neu gestartet (`ON_FAILURE`)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Das Backend läuft als separater Service und stellt die REST-API sowie den WebSocket-Endpunkt bereit.
 
-```bash
-ng generate --help
-```
+## Lokale Entwicklung
 
-## Building
+### Voraussetzungen
 
-To build the project run:
+- Node.js 22+
+- npm 11+
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Setup
 
 ```bash
-ng test
+npm install
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+### Entwicklungsserver starten
 
 ```bash
-ng e2e
+npm start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Die App ist dann unter `http://localhost:4200` erreichbar. Änderungen werden automatisch neu geladen.
 
-## Additional Resources
+> Für lokale Entwicklung muss das Backend auf `http://localhost:8080` laufen (siehe `src/environments/environment.ts`).
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Build
+
+```bash
+npm run build
+```
+
+Die Build-Artefakte landen im `dist/`-Verzeichnis.
+
+### Tests
+
+```bash
+npm test
+```
+
+### Docker (lokal)
+
+```bash
+docker build -t crowdcue-frontend .
+docker run -e PORT=8080 -p 8080:8080 crowdcue-frontend
+```
