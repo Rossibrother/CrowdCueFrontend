@@ -1,36 +1,36 @@
 # CrowdCue – Frontend
 
-CrowdCue ist eine Echtzeit-Song-Request-App für DJs und ihr Publikum. Der DJ erstellt eine Queue, teilt einen QR-Code mit dem Publikum und das Publikum kann darüber Songs suchen und zur Playlist hinzufügen – alles live und ohne Registrierung.
+CrowdCue is a real-time song request app for DJs and their audience. The DJ creates a queue, shares a QR code with the crowd, and the audience can search for songs and add them to the playlist – all live and without registration.
 
 ## Features
 
-- **DJ-View** – Erstelle eine neue Queue und verwalte die aktuelle Songliste. Songs können jederzeit entfernt werden.
-- **Crowd-View** – Das Publikum öffnet die Seite per QR-Code oder Link, sucht nach Songs und fügt sie der Queue hinzu.
-- **QR-Code-Generator** – Automatisch generierter QR-Code, der direkt zur Crowd-View der aktuellen Queue führt. Der Link kann auch in die Zwischenablage kopiert werden.
-- **Echtzeit-Updates** – Queue-Änderungen (Songs hinzufügen/entfernen) werden per WebSocket (STOMP) sofort an alle verbundenen Clients übertragen.
+- **DJ View** – Create a new queue and manage the current song list. Songs can be removed at any time.
+- **Crowd View** – The audience opens the page via QR code or link, searches for songs and adds them to the queue.
+- **QR Code Generator** – Automatically generated QR code that leads directly to the crowd view of the current queue. The link can also be copied to the clipboard.
+- **Real-time Updates** – Queue changes (adding/removing songs) are instantly pushed to all connected clients via WebSocket (STOMP).
 
 ## Tech Stack
 
-- **Framework:** [Angular 22](https://angular.dev/) mit [Angular Material](https://material.angular.io/)
-- **Echtzeit:** WebSockets via [@stomp/stompjs](https://stomp-js.github.io/stomp-websocket/)
-- **QR-Code:** [qrcode](https://www.npmjs.com/package/qrcode)
+- **Framework:** [Angular 22](https://angular.dev/) with [Angular Material](https://material.angular.io/)
+- **Real-time:** WebSockets via [@stomp/stompjs](https://stomp-js.github.io/stomp-websocket/)
+- **QR Code:** [qrcode](https://www.npmjs.com/package/qrcode)
 - **Tests:** [Vitest](https://vitest.dev/)
 
 ## Hosting
 
-Die App ist als Docker-Image gebaut und wird auf [Railway](https://railway.app) gehostet:
+The app is built as a Docker image and hosted on [Railway](https://railway.app):
 
-- **Produktions-URL:** `https://crowdcue.xyz`
-- **Build:** Multi-Stage Dockerfile – Stage 1 baut die Angular-App mit Node.js, Stage 2 liefert die statischen Dateien über **nginx:alpine** aus.
-- **Port:** 8080 (wird von Railway dynamisch über die `$PORT`-Umgebungsvariable gesetzt)
-- **Sicherheit:** nginx ist mit Security-Headern konfiguriert (HSTS, CSP, X-Frame-Options, etc.)
-- **Restart-Policy:** Bei Fehler wird der Container automatisch neu gestartet (`ON_FAILURE`)
+- **Production URL:** `https://crowdcue.xyz`
+- **Build:** Multi-stage Dockerfile – Stage 1 builds the Angular app with Node.js, Stage 2 serves the static files via **nginx:alpine**.
+- **Port:** 8080 (dynamically set by Railway via the `$PORT` environment variable)
+- **Security:** nginx is configured with security headers (HSTS, CSP, X-Frame-Options, etc.)
+- **Restart Policy:** The container is automatically restarted on failure (`ON_FAILURE`)
 
-Das Backend läuft als separater Service und stellt die REST-API sowie den WebSocket-Endpunkt bereit.
+The backend runs as a separate service and provides the REST API and WebSocket endpoint.
 
-## Lokale Entwicklung
+## Local Development
 
-### Voraussetzungen
+### Prerequisites
 
 - Node.js 22+
 - npm 11+
@@ -41,15 +41,15 @@ Das Backend läuft als separater Service und stellt die REST-API sowie den WebSo
 npm install
 ```
 
-### Entwicklungsserver starten
+### Start Development Server
 
 ```bash
 npm start
 ```
 
-Die App ist dann unter `http://localhost:4200` erreichbar. Änderungen werden automatisch neu geladen.
+The app will be available at `http://localhost:4200`. Changes are automatically reloaded.
 
-> Für lokale Entwicklung muss das Backend auf `http://localhost:8080` laufen (siehe `src/environments/environment.ts`).
+> For local development, the backend must be running at `http://localhost:8080` (see `src/environments/environment.ts`).
 
 ### Build
 
@@ -57,7 +57,7 @@ Die App ist dann unter `http://localhost:4200` erreichbar. Änderungen werden au
 npm run build
 ```
 
-Die Build-Artefakte landen im `dist/`-Verzeichnis.
+Build artifacts are output to the `dist/` directory.
 
 ### Tests
 
@@ -65,7 +65,7 @@ Die Build-Artefakte landen im `dist/`-Verzeichnis.
 npm test
 ```
 
-### Docker (lokal)
+### Docker (local)
 
 ```bash
 docker build -t crowdcue-frontend .
