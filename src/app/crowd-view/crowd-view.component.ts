@@ -6,10 +6,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Song } from '../model/song';
 import { SongService } from '../service/song-service';
-import { WebSocketService } from '../service/websocket.service';
+import { SongQueueService } from '../service/song-queue.service';
 
 @Component({
   selector: 'app-crowd-view',
@@ -28,24 +27,15 @@ import { WebSocketService } from '../service/websocket.service';
 })
 export class CrowdViewComponent {
   private songService = inject(SongService);
-  private webSocketService = inject(WebSocketService);
+  private songQueueService = inject(SongQueueService);
 
   searchQuery = signal('');
   searchResults = signal<Song[]>([]);
   isLoading = signal(false);
   hasSearched = signal(false);
   errorMessage = signal('');
-  queue = signal<Song[]>([]);
 
-  constructor() {
-    this.webSocketService.getSongs$()
-      .pipe(takeUntilDestroyed())
-      .subscribe(song => this.queue.update(q => [...q, song]));
-
-    this.webSocketService.getRemovedSongs$()
-      .pipe(takeUntilDestroyed())
-      .subscribe(removed => this.queue.update(q => q.filter(s => s.name !== removed.name || s.artist !== removed.artist)));
-  }
+  readonly queue = this.songQueueService.queue;
 
   search() {
     if (!this.searchQuery().trim()) {
@@ -85,5 +75,4 @@ export class CrowdViewComponent {
       }
     });
   }
-
 }
