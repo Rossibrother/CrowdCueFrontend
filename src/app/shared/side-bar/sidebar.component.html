@@ -16,42 +16,39 @@
       class="sidebar"
     >
       <mat-nav-list class="nav-list">
-        <mat-list-item>
+        <mat-list-item routerLink="/dashboard">
           <mat-icon matListItemIcon>dashboard</mat-icon>
-          <a matListItemTitle routerLink="/dashboard">Dashboard</a>
+          <span matListItemTitle>Dashboard</span>
         </mat-list-item>
 
-        <mat-list-item [class.nav-item-disabled]="!currentQueueId()">
+        <mat-list-item
+          [class.nav-item-disabled]="!currentQueueId()"
+          [routerLink]="currentQueueId() ? ['/dj-view', currentQueueId()] : null"
+          [attr.aria-disabled]="!currentQueueId()"
+          [tabIndex]="currentQueueId() ? 0 : -1"
+        >
           <mat-icon matListItemIcon>radio</mat-icon>
-          <a
-            matListItemTitle
-            [routerLink]="currentQueueId() ? ['/dj-view', currentQueueId()] : null"
-            [class.disabled-link]="!currentQueueId()"
-            [attr.aria-disabled]="!currentQueueId()"
-            [tabIndex]="currentQueueId() ? 0 : -1"
-          >DJ Ansicht</a>
+          <span matListItemTitle>DJ Ansicht</span>
         </mat-list-item>
 
-        <mat-list-item [class.nav-item-disabled]="!currentQueueId()">
+        <mat-list-item
+          [class.nav-item-disabled]="!currentQueueId()"
+          [routerLink]="currentQueueId() ? ['/crowd-view', currentQueueId()] : null"
+          [attr.aria-disabled]="!currentQueueId()"
+          [tabIndex]="currentQueueId() ? 0 : -1"
+        >
           <mat-icon matListItemIcon>group</mat-icon>
-          <a
-            matListItemTitle
-            [routerLink]="currentQueueId() ? ['/crowd-view', currentQueueId()] : null"
-            [class.disabled-link]="!currentQueueId()"
-            [attr.aria-disabled]="!currentQueueId()"
-            [tabIndex]="currentQueueId() ? 0 : -1"
-          >Crowd Ansicht</a>
+          <span matListItemTitle>Crowd Ansicht</span>
         </mat-list-item>
 
-        <mat-list-item [class.nav-item-disabled]="!currentQueueId()">
+        <mat-list-item
+          [class.nav-item-disabled]="!currentQueueId()"
+          [routerLink]="currentQueueId() ? ['/qr-code', currentQueueId()] : null"
+          [attr.aria-disabled]="!currentQueueId()"
+          [tabIndex]="currentQueueId() ? 0 : -1"
+        >
           <mat-icon matListItemIcon>qr_code</mat-icon>
-          <a
-            matListItemTitle
-            [routerLink]="currentQueueId() ? ['/qr-code', currentQueueId()] : null"
-            [class.disabled-link]="!currentQueueId()"
-            [attr.aria-disabled]="!currentQueueId()"
-            [tabIndex]="currentQueueId() ? 0 : -1"
-          >QR-Code</a>
+          <span matListItemTitle>QR-Code</span>
         </mat-list-item>
       </mat-nav-list>
     </mat-sidenav>
