@@ -14,10 +14,10 @@ export class SongService {
   }
 
   addSong(song: Song, queueId: string) {
-    return this.httpClient.post<Song>(`${environment.apiUrl}/queues/${queueId}/songs/add`, song);
+    return this.httpClient.post<Song>(`${environment.apiUrl}/queues/${queueId}/songs`, song);
   }
 
   removeSong(song: Song, queueId: string) {
-    return this.httpClient.delete<Song>(`${environment.apiUrl}/queues/${queueId}/songs/remove`, { body: song });
+    return this.httpClient.delete<Song>(`${environment.apiUrl}/queues/${queueId}/songs`, { body: song });
   }
 }
