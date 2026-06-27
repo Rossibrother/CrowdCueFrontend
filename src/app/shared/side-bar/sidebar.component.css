@@ -83,6 +83,24 @@ a:hover {
   text-decoration: none;
 }
 
+.nav-item-disabled {
+  opacity: 0.45;
+}
+
+.nav-item-disabled:hover {
+  background: transparent !important;
+  color: #8b8baa !important;
+}
+
+.nav-item-disabled:hover mat-icon {
+  color: #6b6b8e !important;
+}
+
+.disabled-link {
+  pointer-events: none;
+  cursor: default;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .sidebar {

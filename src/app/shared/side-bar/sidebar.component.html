@@ -17,13 +17,30 @@
     >
       <mat-nav-list class="nav-list">
         <mat-list-item>
-          <mat-icon matListItemIcon>radio</mat-icon>
-          <a matListItemTitle routerLink="/dj-view">DJ Ansicht</a>
+          <mat-icon matListItemIcon>dashboard</mat-icon>
+          <a matListItemTitle routerLink="/dashboard">Dashboard</a>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item [class.nav-item-disabled]="!currentQueueId()">
+          <mat-icon matListItemIcon>radio</mat-icon>
+          <a
+            matListItemTitle
+            [routerLink]="currentQueueId() ? ['/dj-view', currentQueueId()] : null"
+            [class.disabled-link]="!currentQueueId()"
+            [attr.aria-disabled]="!currentQueueId()"
+            [tabIndex]="currentQueueId() ? 0 : -1"
+          >DJ Ansicht</a>
+        </mat-list-item>
+
+        <mat-list-item [class.nav-item-disabled]="!currentQueueId()">
           <mat-icon matListItemIcon>group</mat-icon>
-          <a matListItemTitle routerLink="/crowd-view">Crowd Ansicht</a>
+          <a
+            matListItemTitle
+            [routerLink]="currentQueueId() ? ['/crowd-view', currentQueueId()] : null"
+            [class.disabled-link]="!currentQueueId()"
+            [attr.aria-disabled]="!currentQueueId()"
+            [tabIndex]="currentQueueId() ? 0 : -1"
+          >Crowd Ansicht</a>
         </mat-list-item>
       </mat-nav-list>
     </mat-sidenav>

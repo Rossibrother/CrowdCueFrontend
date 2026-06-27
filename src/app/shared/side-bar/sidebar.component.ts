@@ -1,6 +1,6 @@
-import { Component, signal, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, NavigationEnd } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,17 +27,18 @@ import { filter } from 'rxjs/operators';
 export class SidebarComponent implements OnInit, OnDestroy {
   sidebarOpen = signal(true);
   isCrowdView = signal(false);
+  currentQueueId = signal<string | null>(null);
 
   private routerSub!: Subscription;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.updateCrowdView(this.router.url);
+    this.updateNavigationState(this.router.url);
     this.routerSub = this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        this.updateCrowdView(event.urlAfterRedirects);
+        this.updateNavigationState(event.urlAfterRedirects);
       });
   }
 
@@ -45,11 +46,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.routerSub?.unsubscribe();
   }
 
-  private updateCrowdView(url: string): void {
-    this.isCrowdView.set(url.startsWith('/crowd-view'));
-  }
-
   toggleSidebar(): void {
     this.sidebarOpen.update(isOpen => !isOpen);
+  }
+
+  private updateNavigationState(url: string): void {
+    this.isCrowdView.set(url.startsWith('/crowd-view'));
+    this.currentQueueId.set(this.extractQueueId(url));
+  }
+
+  private extractQueueId(url: string): string | null {
+    const match = url.match(/\/(dj-view|crowd-view)\/([^?#]+)/);
+    return match ? match[2] : null;
   }
 }

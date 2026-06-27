@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,13 +14,23 @@ import { SongQueueService } from '../service/song-queue.service';
   templateUrl: './dj-view.component.html',
   styleUrl: './dj-view.component.css'
 })
-export class DJViewComponent {
+export class DJViewComponent implements OnInit {
+  private route = inject(ActivatedRoute);
   private songService = inject(SongService);
   private songQueueService = inject(SongQueueService);
 
   readonly songQueue = this.songQueueService.queue;
+  queueId = '';
+
+  ngOnInit() {
+    const queueId = this.route.snapshot.paramMap.get('queueId');
+    if (queueId) {
+      this.songQueueService.initialize(queueId);
+      this.queueId = queueId;
+    }
+  }
 
   removeSongFromQueue(song: Song) {
-    this.songService.removeSong(song).subscribe();
+    this.songService.removeSong(song, this.queueId).subscribe();
   }
 }

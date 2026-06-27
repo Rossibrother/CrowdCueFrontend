@@ -1,4 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,7 +26,8 @@ import { SongQueueService } from '../service/song-queue.service';
   templateUrl: './crowd-view.component.html',
   styleUrl: './crowd-view.component.css'
 })
-export class CrowdViewComponent {
+export class CrowdViewComponent implements OnInit {
+  private route = inject(ActivatedRoute);
   private songService = inject(SongService);
   private songQueueService = inject(SongQueueService);
 
@@ -36,6 +38,15 @@ export class CrowdViewComponent {
   errorMessage = signal('');
 
   readonly queue = this.songQueueService.queue;
+  queueId = '';
+
+  ngOnInit() {
+    const queueId = this.route.snapshot.paramMap.get('queueId');
+    if (queueId) {
+      this.songQueueService.initialize(queueId);
+      this.queueId = queueId;
+    }
+  }
 
   search() {
     if (!this.searchQuery().trim()) {
@@ -63,7 +74,7 @@ export class CrowdViewComponent {
   }
 
   addSong(song: Song) {
-    this.songService.addSong(song).subscribe({
+    this.songService.addSong(song, this.queueId).subscribe({
       next: () => {
         this.searchQuery.set('');
         this.searchResults.set([]);
