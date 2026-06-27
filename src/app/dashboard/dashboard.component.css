@@ -96,6 +96,15 @@
   margin-right: 8px;
 }
 
+.button-spinner {
+  margin-right: 8px;
+  display: inline-block;
+}
+
+.button-spinner ::ng-deep circle {
+  stroke: #fff;
+}
+
 @media (max-width: 600px) {
   .dashboard-container {
     padding: 16px;

@@ -8,8 +8,12 @@
         <h1>Dashboard</h1>
         <p class="subtitle">Erstelle eine neue Queue und teile sie direkt mit deinem Publikum.</p>
       </div>
-      <button mat-raised-button class="create-button" (click)="createQueue()">
-        <mat-icon>add_circle</mat-icon>
+      <button mat-raised-button class="create-button" (click)="createQueue()" [disabled]="isCreating">
+        @if (isCreating) {
+          <mat-spinner diameter="20" class="button-spinner"></mat-spinner>
+        } @else {
+          <mat-icon>add_circle</mat-icon>
+        }
         Neue Queue erstellen
       </button>
     </div>
